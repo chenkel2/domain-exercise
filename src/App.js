@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import Client from './Client';
-import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import _ from 'underscore';
+import { AlertList } from 'react-bs-notifier';
+
+import './App.css';
+import Client from './Client';
 import ListView from './ListView';
 import DetailView from './DetailView';
-import _ from 'underscore';
 
 const NAV_DETAIL_VIEW = Symbol();
 const NAV_LIST_VIEW = Symbol();
@@ -14,6 +16,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      alerts: [],
       domains: [],
       currentView: NAV_LIST_VIEW
     };
@@ -47,15 +50,50 @@ class App extends Component {
     });
   }
 
-  render() {
+  success = (headline, message) => {
+    const newAlerts = this.state.alerts.concat({
+      id: (new Date()).getTime(),
+      type: 'success',
+      headline,
+      message
+    });
+
+    this.setState({
+      alerts: newAlerts
+    });
+  }
+
+  getView = () => {
     switch(this.state.currentView) {
       case NAV_LIST_VIEW:
-        return <ListView domains={this.state.domains} selectDomain={this.selectDomain}/>
+        return <ListView domains={this.state.domains} selectDomain={this.selectDomain} />
       case NAV_DETAIL_VIEW:
-        return <DetailView domain={this.state.domain} saveChanges={this.saveChanges}/>
+        return <DetailView domain={this.state.domain} saveChanges={this.saveChanges} success={this.success}/>
       default:
         return <span/>
     }
+  }
+
+	onAlertDismissed = (alert) => {
+		const alerts = this.state.alerts;
+		const index = alerts.indexOf(alert);
+
+		if (index >= 0) {
+			this.setState({
+				alerts: [...alerts.splice(0, index), ...alerts.slice(index + 1)]
+			});
+		}
+	}
+
+  render() {
+    return (<div>
+			<AlertList
+				alerts={this.state.alerts}
+				timeout={1000}
+				onDismiss={this.onAlertDismissed}
+			/>
+      {this.getView()}
+    </div>)
   }
 }
 

@@ -37,7 +37,9 @@ class DetailView extends Component {
       price: this.state.price,
       registrant_email: this.state.registrant_email,
       domain: this.state.domain
-    })
+    });
+
+    this.props.success('Success!', 'Domain was updated successfully.');
   }
 
   render() {

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 import Util from './Util';
 
 function SuccessIcon(props) {
@@ -33,8 +35,8 @@ class ListView extends Component {
             <th>Price</th>
           </tr>
         </thead>
-        <tbody>
-          {domains}
+        <tbody className="domain-list">
+            {domains}
         </tbody>
       </table>
     </div>
