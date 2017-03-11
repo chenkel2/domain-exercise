@@ -39,7 +39,7 @@ class App extends Component {
 
   saveChanges = (domain) => {
     var stateDomain = _.find(this.state.domains, function(sample) {
-      return sample.id == domain.id
+      return sample.id === domain.id
     });
 
     stateDomain.domain = domain.domain;
