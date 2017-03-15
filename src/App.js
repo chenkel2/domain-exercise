@@ -1,9 +1,10 @@
+import "babel-polyfill";
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import _ from 'underscore';
 import { AlertList } from 'react-bs-notifier';
 
-import './App.css';
+import './App.css';``
 import Client from './Client';
 import ListView from './ListView';
 import DetailView from './DetailView';
