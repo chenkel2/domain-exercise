@@ -21,7 +21,9 @@ class App extends Component {
       domains: [],
       currentView: NAV_LIST_VIEW
     };
+  }
 
+  componentDidMount() {
     Client.getDomains().then((data) => {
       this.setState({
           domains: data.domains
